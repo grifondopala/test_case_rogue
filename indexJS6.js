@@ -28,6 +28,9 @@ class Game{
     isEnded = false;
     playAgain = null;
 
+    healthBar = null;
+    powerBar = null;
+
     init(){
 
         this.field = document.querySelector('.field-box > .field')
@@ -121,6 +124,11 @@ class Game{
             window.location.reload();
         }
 
+        let inventory = document.querySelector('.field-box > .inventory');
+        this.healthBar = inventory.querySelector('.health');
+        this.powerBar = inventory.querySelector('.power');
+        this.updateBars();
+
     }
 
     generateRandomNumber(begin, end){
@@ -176,9 +184,11 @@ class Game{
             }
             if(cell.type === 'tileSW'){
                 this.hero.addPower(this.GAIN_POWER);
+                this.updateBars();
             }
             if(cell.type === 'tileHP'){
                 this.hero.addHealth(this.GAIN_HEALTH);
+                this.updateBars();
             }
             this.swapCells(newRow, newColumn, this.hero.row, this.hero.column, 'tileP', this.hero.percent_health)
             this.hero.changePosition(newRow, newColumn);
@@ -220,6 +230,7 @@ class Game{
                     this.endGame(false);
                 }
                 this.cells[this.hero.row][this.hero.column].changeHealthBar(this.hero.percent_health)
+                this.updateBars();
                 continue;
             }
 
@@ -269,6 +280,11 @@ class Game{
         }else{
             text.innerHTML = 'Вы проиграли!'
         }
+    }
+
+    updateBars(){
+        this.healthBar.innerHTML = 'Здоровье: ' + Math.floor(this.hero.percent_health) + '%';
+        this.powerBar.innerHTML = 'Сила: ' + this.hero.power;
     }
 }
 
