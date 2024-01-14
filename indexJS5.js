@@ -46,26 +46,6 @@ var Game = function(){
             this.cells.push(row);
         }
 
-        var numberRooms = this.generateRandomNumber(5, 10);
-        for(var s = 0; s < numberRooms; s++){
-            
-            var roomWidth = this.generateRandomNumber(3, 8);
-            var roomHeight = this.generateRandomNumber(3, 8);
-            
-            var leftPointX = this.generateRandomNumber(0, this.COLUMNS_AMOUNT - 1);
-            var leftPointY = this.generateRandomNumber(0, this.ROWS_AMOUNT - 1);
-
-            while(leftPointX + roomWidth >= this.COLUMNS_AMOUNT || leftPointY + roomHeight >= this.ROWS_AMOUNT){
-                leftPointX = this.generateRandomNumber(0, this.COLUMNS_AMOUNT - 1);
-                leftPointY = this.generateRandomNumber(0, this.ROWS_AMOUNT - 1);
-            }
-            
-            for(i = 0; i < roomHeight; i++){
-                for(j = 0; j < roomWidth; j++){
-                    this.cells[leftPointY + i][leftPointX + j].changeType("tile");
-                }
-            }
-        }
 
         var horizontalLinesNumber = this.generateRandomNumber(3, 5);
         for(i = 0; i < horizontalLinesNumber; i++){
@@ -83,13 +63,29 @@ var Game = function(){
             }
         }
 
-        for(i = 0; i < this.ROWS_AMOUNT; i++){
-            for(j = 0; j < this.COLUMNS_AMOUNT; j++){
-                if(this.cells[i][j].type === "tile"){
-                    this.freeCells.push(this.cells[i][j]);
+        this.findFreeCells();
+
+        // Генерация комнат
+        var numberRooms = this.generateRandomNumber(5, 10);
+        for(var s = 0; s < numberRooms; s++){
+            
+            var roomWidth = this.generateRandomNumber(3, 8);
+            var roomHeight = this.generateRandomNumber(3, 8);
+            
+            var cellIndex = this.generateRandomNumber(0, this.freeCells.length - 1);
+
+            while(this.freeCells[cellIndex].column + roomWidth >= this.COLUMNS_AMOUNT || this.freeCells[cellIndex].row + roomHeight >= this.ROWS_AMOUNT){
+                cellIndex = this.generateRandomNumber(0, this.freeCells.length - 1);
+            }
+            
+            for(i = 0; i < roomHeight; i++){
+                for(j = 0; j < roomWidth; j++){
+                    this.cells[this.freeCells[cellIndex].row + i][this.freeCells[cellIndex].column + j].changeType("tile");
                 }
             }
         }
+
+        this.findFreeCells();
 
         // Генерация зельев здоровья
         this.generateGain("tileHP", this.HEALTH_GAIN_AMOUNT);
@@ -123,6 +119,17 @@ var Game = function(){
         this.powerBar = inventory.querySelector('.power');
         this.updateBars();
 
+    }
+
+    this.findFreeCells = function(){
+        this.freeCells = [];
+        for(var i = 0; i < this.ROWS_AMOUNT; i++){
+            for(var j = 0; j < this.COLUMNS_AMOUNT; j++){
+                if(this.cells[i][j].type === "tile"){
+                    this.freeCells.push(this.cells[i][j]);
+                }
+            }
+        }
     }
 
     this.generateRandomNumber = function(begin, end){
