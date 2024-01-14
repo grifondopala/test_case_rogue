@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;subset=cyrillic" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i|Tinos:400,400i&amp;subset=cyrillic" rel="stylesheet">
+		<script type="text/javascript" src="/shared/3rdparty/jquery/jquery.js" language="javascript1.1"></script>
+		<script src="indexJS6.js"></script>
+			<style>
+			* { box-sizing: border-box; }
+			body, html { height: 100%; }
+			body { background-color: #000000; color: #ffffff; }
+			h1 { font-family: "Playfair Display"; font-size: 30px; padding: 10px 0px; margin: 0px; }
+			.field-box { border: 2px solid #d0d0d0; float: left; }
+			.field { 
+				position: relative; 
+				display: grid;
+				grid-template-columns: repeat(40, 25px);
+				grid-template-rows: repeat(24, 25px);
+				width: 1000px; 
+				height: 600px; 
+			}
+			.field .tile { width: 25px; height: 25px; background-size: 100%; background-image: url(images/tile-.png); z-index: 5; }
+			.field .tileW { background-image: url(images/tile-W.png); width: 100%; height: 100%; background-size: cover;}
+			.field .tileE { position: relative; background-image: url(images/tile-E.png); z-index: 9; background-size: cover;}
+			.field .tileP { position: relative; background-image: url(images/tile-P.png); z-index: 9; background-size: cover;}
+			.field .tileHP { background-image: url(images/tile-HP.png); z-index: 10; width: 25px; height: 25px; background-size: cover;}
+			.field .tileSW { background-image: url(images/tile-SW.png); z-index: 10; width: 25px; height: 25px; background-size: cover;}
+			.field .tileE .health { background-color: #ff0000; z-index: 11; position: absolute; left: 0px; top: 0px; height: 3px; }
+			.field .tileP .health { background-color: #00ff00; z-index: 11; position: absolute; left: 0px; top: 0px; height: 3px; }
+			.inventory-box { border: 2px solid #d0d0d0; float: left; }
+			.inventory { position: relative; width: 800px; height: 32px; }
+			.cl { clear: both; display: block; }
+			.play-again{ position: absolute; display: none; align-items: center; justify-content: center; z-index: 20; flex-direction: column;
+						 gap: 10px; left: 0px; top: 0px; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8);}
+			.play-again button { width: 100px; height: 50px; font-size: 18px; cursor: pointer;}	
+			.play-again p { font-size: 18px; }		
+			
+			</style>
+	</head>
+	<body>
+		<h1>Игровое поле</h1>
+		<div class="field-box">
+			<div class="field">
+
+			</div>
+		</div>
+		<div class="cl"></div>
+		<!--h1>Инвентарь</h1>
+		<div class="inventory-box"><div class="inventory"></div></div-->
+
+		<div class="play-again">
+			<p>Тест</p>
+			<button>
+				Начать заново
+			</button>
+		</div>	
+
+		<script>
+
+			var game=new Game();
+			game.init();
+		</script>
+	</body>
+</html>
